@@ -1,98 +1,83 @@
-Party & Identity Platform — Overview & Developer Guide
-📌 Purpose of the System
-This project implements a multi‑tenant Party & Identity Management Platform. It provides a canonical way to represent people, organizations, relationships, identifiers, contact points, addresses, and bank accounts across multiple tenants.
+h1 align="center">🌐 Party & Identity Platform</h1>
+<h3 align="center">A Multi‑Tenant Engine for People, Organizations, Relationships & Identity Data</h3>
+🚀 Overview
+This project implements a multi‑tenant Party & Identity Management Platform.
+It provides a canonical, extensible way to represent:
 
-It is designed for financial, lending, onboarding, KYC, and workflow systems that require:
+People & organizations
 
-A single source of truth for all actors (customers, businesses, guarantors, employees, etc.)
+Contact points (email, phone, portal)
 
-Effective‑dated history (civil status, addresses, contacts)
+Addresses & geocodes
 
-Encrypted identifiers (SIN, passport, driver’s license)
+Encrypted identifiers (SIN, passport, DL)
 
-Multi‑tenant isolation
+Civil status history
 
-Extensible relationship modeling
+Party relationships
 
-Regulatory‑grade auditability
+Bank accounts & mandates
 
-🏗️ High‑Level Architecture
+Effective‑dated historical records
+
+This system is designed for onboarding, KYC, lending, workflow automation, and any domain requiring clean, auditable, regulatory‑grade identity data.
+
+🏗️ Architecture
 Backend
-Java 17 / Spring Boot
+Java 17
 
-PostgreSQL (multi‑tenant aware)
+Spring Boot
 
-JPA/Hibernate for ORM
+JPA/Hibernate
 
-REST API for frontend integration
+PostgreSQL
+
+REST API (/api/*)
 
 Frontend
 React (localhost:3000)
 
-Consumes /api/* endpoints
+Consumes backend REST endpoints
 
 Database
-PostgreSQL schema with:
+PostgreSQL schema with strict multi‑tenant isolation
 
-Canonical party table
+UUID primary keys
 
-Person & organization facets
-
-Effective‑dated contact, address, civil status
+Effective‑dated tables
 
 Encrypted identifiers
 
-Bank account + mandate metadata
-
-Relationship graph
-
-🧩 Core Domain Concepts
-1. Party
-The root entity representing any actor in the system.
+🧩 Domain Model Summary
+1. Party (root entity)
+Represents any actor in the system.
 
 Field	Description
-tenant_id	Multi‑tenant isolation key
+tenant_id	Tenant isolation key
 party_id	UUID primary key
-kind	PERSON or ORG
+kind	PERSON / ORG
 status	ACTIVE / INACTIVE
 created_at	Timestamp
-Every person or organization starts here.
-
-2. Person (Facet)
-1:1 extension of party for individuals.
+2. Person (facet of Party)
+1:1 extension for individuals.
 
 Includes:
+given_name, middle_name, family_name, dob, residency_status
 
-given_name
-
-middle_name
-
-family_name
-
-dob
-
-residency_status
-
-3. Organization (Facet)
-1:1 extension of party for businesses.
+3. Organization (facet of Party)
+1:1 extension for businesses.
 
 Includes:
+legal_name, business_type, registration_jurisdiction, bin
 
-legal_name
-
-registration_jurisdiction
-
-business_type
-
-BIN (business identification number)
-
-4. Civil Status (Effective‑Dated)
+4. Civil Status (effective‑dated)
 Tracks marital/civil status over time.
 
-Primary key: (tenant_id, party_id, effective_from)
+Primary key:
+(tenant_id, party_id, effective_from)
 
-5. Party Identifier (Encrypted IDs)
-Stores sensitive identifiers such as:
+5. Party Identifier (encrypted)
+Stores sensitive identifiers:
 
 SIN
 
@@ -100,24 +85,19 @@ Passport
 
 Driver’s license
 
-Encrypted using:
+Encrypted fields:
+value_ciphertext BYTEA, last4, issuer, valid_from, valid_to
 
-value_ciphertext BYTEA
+6. Contact Point
+Email, phone, mobile, fax, portal accounts.
 
-last4 for display
-
-issuer, valid_from, valid_to
-
-6. Contact Points
-Email, phone, fax, portal accounts.
-
-7. Party ↔ Contact (History)
-Effective‑dated association between a party and a contact point.
+7. Party ↔ Contact (history)
+Effective‑dated association with preferred flag.
 
 8. Address
-Stores physical address + optional geocode JSON.
+Physical address + optional geocode JSON.
 
-9. Party ↔ Address (History)
+9. Party ↔ Address (history)
 Effective‑dated association for:
 
 LEGAL
@@ -126,7 +106,7 @@ MAILING
 
 SERVICE
 
-10. Party Relationships
+10. Party Relationship
 Graph of real‑world ties:
 
 Parent/child
@@ -138,29 +118,90 @@ Guarantor/borrower
 Employer/employee
 
 11. Party Bank Account
-Stores masked and hashed bank account details for ACH/PAD.
+Masked & hashed ACH/PAD account details.
 
 Includes:
+routing_number_hash, account_no_hash, mask_last4, verification_status, consent_to_debit, mandate_id, limits, effective dates
 
-routing_number_hash
+🛠️ Running the Backend
+1. Create PostgreSQL database
+sql
+CREATE DATABASE party_identity;
+2. Configure Spring Boot
+application.properties:
 
-account_no_hash
+properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/party_identity
+spring.datasource.username=postgres
+spring.datasource.password=yourpassword
+spring.jpa.hibernate.ddl-auto=update
+3. Start the backend
+bash
+mvn spring-boot:run
+API available at:
 
-account_mask_last4
+Code
+http://localhost:8080/api
+🎨 Running the Frontend
+bash
+cd frontend
+npm install
+npm start
+Runs at:
 
-verification status
+Code
+http://localhost:3000
+📚 API Examples
+GET /api/roles
+Returns all roles with tenant mapping.
 
-consent to debit
+GET /api/party/{id}
+Fetches a canonical party.
 
-mandate metadata
+GET /api/party/{id}/contacts
+Returns contact history.
 
-effective‑dated validity
+GET /api/party/{id}/addresses
+Returns address history.
 
-🚀 Running the Project
-Prerequisites
-Java 17+
+🧪 Testing
+Use curl or Postman:
 
-Maven or Gradle
+bash
+curl http://localhost:8080/api/roles
+🛡️ Development Guidelines
+Always include tenant_id in queries
+
+Use UUIDs for all primary keys
+
+Use effective‑dating for historical tables
+
+Never store raw identifiers (always encrypted)
+
+Use DTOs to avoid exposing internal entities
+
+🔮 Future Enhancements
+KYC document ingestion
+
+Consent management
+
+Party risk scoring
+
+Workflow integration
+
+GraphQL API for relationship traversal
+
+If you want, I can also:
+
+Add badges (build, license, version)
+
+Add a project logo
+
+Add a database diagram
+
+Add a “Quick Start” section
+
+Add a “Contributing” section
 
 PostgreSQL 14+
 
