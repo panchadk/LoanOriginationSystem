@@ -1,4 +1,4 @@
-h1 align="center">🌐 Party & Identity Platform</h1>
+<h1 align="center">🌐 Party & Identity Platform</h1>
 <h3 align="center">A Multi‑Tenant Engine for People, Organizations, Relationships & Identity Data</h3>
 🚀 Overview
 This project implements a multi‑tenant Party & Identity Management Platform.
