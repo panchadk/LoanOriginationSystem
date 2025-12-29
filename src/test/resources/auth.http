@@ -1,0 +1,20 @@
+### Register a new user
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "email": "kari.panch@gmail.com",
+  "password": "secure123",
+  "firstName": "Kari",
+  "lastName": "Panch",
+  "tenantId": "c3f1a8e2-9b4d-4e6b-9c2a-7f3a2d9c1e8f"
+}
+
+### Login with the same user
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "kari.panch@gmail.com",
+  "password": "secure123"
+}

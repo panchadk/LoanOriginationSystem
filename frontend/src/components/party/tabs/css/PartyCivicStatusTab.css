@@ -1,0 +1,62 @@
+.party-civic-status-tab {
+  padding: 1rem;
+}
+
+.party-civic-status-tab table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.party-civic-status-tab th,
+.party-civic-status-tab td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.party-civic-status-tab input[type="text"],
+.party-civic-status-tab input[type="date"] {
+  width: 100%;
+  padding: 0.4rem;
+  box-sizing: border-box;
+}
+
+.party-civic-status-tab button {
+  margin-right: 0.3rem;
+  padding: 0.4rem 0.6rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.party-civic-status-tab button:last-child {
+  background-color: #dc3545;
+}
+
+.toast {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.toast.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.toast.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.toast.warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.dirty {
+  background-color: #fff8e1;
+}

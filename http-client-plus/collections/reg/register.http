@@ -1,0 +1,7 @@
+### register
+POST /api/auth/register
+Content-Type: application/json
+
+{"email": "string", "password": "string", "firstName": "string", "lastName": "string", "tenantId": {"mostSigBits": 0, "leastSigBits": 0}, "roles": {}}
+>> register/response-{{$timestamp}}.json
+

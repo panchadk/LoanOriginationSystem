@@ -1,0 +1,45 @@
+/* Sidebar Styling */
+.sidebar {
+  background-color: #f8f9fa; /* Light grey background */
+  height: 100vh; /* Full height */
+  padding: 1rem; /* Add some spacing */
+  border-right: 1px solid #ddd; /* Optional: Add a subtle border */
+}
+
+/* Accordion Header Styling */
+.accordion-blue .accordion-header {
+  background-color: #0d6efd; /* Blue background for titles */
+  color: white; /* White text */
+  font-weight: bold; /* Bold font for emphasis */
+  text-transform: uppercase; /* Optional: Uppercase text */
+  padding: 0.75rem; /* Add padding for better spacing */
+  border-radius: 0.25rem; /* Rounded corners for label-like appearance */
+  margin-bottom: 0.5rem; /* Add spacing between headers */
+  cursor: pointer; /* Change cursor to pointer for interactivity */
+}
+
+/* Accordion Body Styling */
+.accordion-blue .accordion-body {
+  background-color: #ffffff; /* White background for dropdown content */
+  color: #333; /* Dark grey text for readability */
+  padding: 0.5rem; /* Add padding inside the accordion body */
+}
+
+/* Nav Links Styling */
+.accordion-blue .nav-link {
+  color: #0d6efd; /* Blue text for links */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  padding: 0.5rem 1rem; /* Adjust padding for better spacing */
+}
+
+.accordion-blue .nav-link:hover {
+  background-color: #e9ecef; /* Light grey background on hover */
+  color: #0d6efd; /* Keep blue text on hover */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Content Area Styling */
+.content-area {
+  padding: 1rem; /* Add padding to the main content area */
+  min-height: 80vh; /* Ensure content area takes up sufficient space */
+}
